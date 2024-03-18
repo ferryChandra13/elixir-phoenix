@@ -1,5 +1,6 @@
 defmodule ForumWeb.UserJSON do
   alias Forum.Accounts.User
+  alias Forum.Posts.Post
 
   @doc """
   Renders a list of users.
@@ -19,7 +20,15 @@ defmodule ForumWeb.UserJSON do
     %{
       id: user.id,
       name: user.name,
-      email: user.email
+      email: user.email,
+    }
+  end
+
+  defp post_data(%Post{} = post) do
+    %{
+      id: post.id,
+      title: post.title,
+      body: post.body
     }
   end
 end

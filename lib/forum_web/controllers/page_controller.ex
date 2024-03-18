@@ -1,10 +1,13 @@
 defmodule ForumWeb.PageController do
+  alias Forum.Repo
+  alias Forum.Accounts.User
   use ForumWeb, :controller
 
   def home(conn, _params) do
     # The home page is often custom made,
     # so skip the default app layout.
-    render(conn, :home, layout: false)
+    users = Repo.all(User)
+    render(conn, :home, users: users, layout: false)
   end
 
   def users(conn, _params) do
