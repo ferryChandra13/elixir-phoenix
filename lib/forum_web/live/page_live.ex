@@ -2,6 +2,15 @@
 defmodule ForumWeb.Live.PageLive do
   use ForumWeb, :live_view
 
+  # Documentation sources
+  # https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.Router.html#functions
+  # https://www.youtube.com/watch?v=hrpulBR5PFg&t=492s
+  # For radar chart, https://medium.com/@lionel.aimerie/integrating-chart-js-into-elixir-phoenix-for-visual-impact-9a3991f0690f
+  # https://hexdocs.pm/phoenix_live_view/js-interop.html#client-hooks-via-phx-hook
+  # and GPT tq.
+
+
+  # mount is the first function to be called (with the default value)
   def mount(_params, _session, socket) do
     HTTPoison.start()
     token = get_token("john.ang", "30971f7a1d2058cebe65e9eb5f50c967bf8fc526a5de9cb8dd42d3ebeec3a938")
@@ -11,13 +20,9 @@ defmodule ForumWeb.Live.PageLive do
     {:ok, assign(socket, users: user_data, dept: dept_data), layout: false}
   end
 
-  # def render(assigns) do
-  #   ~L"""
-  #   <%= live_render(@socket, ForumWeb.Live.PageLiveView, assigns) %>
-  #   """
-  # end
-
+  # When a button with phx-hook="refresh_data" is clicked, handle_event triggered.
   def handle_event("refresh_data", %{"user_id" => user_id, "dept_id" => dept_id}, socket) do
+    # can use req library
     HTTPoison.start()
     token = get_token("john.ang", "30971f7a1d2058cebe65e9eb5f50c967bf8fc526a5de9cb8dd42d3ebeec3a938")
     headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json"]
