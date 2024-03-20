@@ -18,6 +18,9 @@ defmodule ForumWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/get_skills/:user_id", PageController, :get_skills
+    # get "/department_member/:user_id", SkillController, :department_member
+    live "/posts", Live.PageLive
   end
 
   # Other scopes may use custom stacks.
