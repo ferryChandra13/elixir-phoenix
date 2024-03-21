@@ -1,50 +1,48 @@
 <div class="flex flex-row width-full gap-x-6 bg-blue-100">
   <div class="MuiBox-root css-1adk4y8 flex flex-col gap-y-3" style="">
-    <h4 class="MuiTypography-root MuiTypography-h4 css-10k18s8 m-0 text-[2rem] font-[Barlow,sans-serif] leading-tight font-bold text-blue-900">Data And AI</h4>
+    <h4 class="MuiTypography-root MuiTypography-h4 css-10k18s8 m-0 text-[2rem] font-[Barlow,sans-serif] leading-tight font-bold text-blue-900">
+      Data And AI
+    </h4>
     <div class="MuiBox-root css-qib4fd bg-white font-inter leading-normal text-gray-500 font-normal text-base rounded-lg w-fit h-4/5 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-244">
       <div class="MuiBox-root css-12b8dd2 flex flex-col gap-3">
-      <%= for person_dept <- @dept do %>
-        <button phx-click="refresh_data" phx-value-user_id={person_dept["id"]} phx-value-dept_id="1" class="MuiBox-root css-mpatmq flex flex-row px-4 py-3 min-w-64 items-center justify-between hover:bg-gray-100">
-          <div class="MuiBox-root css-qub5a4 flex flex-row justify-between items-center">
-            <div
-              class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1hag51y relative flex items-center justify-center shrink-0 w-10 h-10 font-barlow text-lg text-white rounded-full overflow-hidden select-none bg-gray-200 mr-5"
-            >
-              <svg
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-6gg3zs"
-                focusable="false"
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                data-testid="PersonIcon"
-              >
-                <path
-                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                ></path>
-              </svg>
+        <%= for person_dept <- @dept do %>
+          <button
+            phx-click="refresh_data"
+            phx-value-user_id={person_dept["id"]}
+            phx-value-dept_id="1"
+            class="MuiBox-root css-mpatmq flex flex-row px-4 py-3 min-w-64 items-center justify-between hover:bg-gray-100"
+          >
+            <div class="MuiBox-root css-qub5a4 flex flex-row justify-between items-center">
+              <div class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1hag51y relative flex items-center justify-center shrink-0 w-10 h-10 font-barlow text-lg text-white rounded-full overflow-hidden select-none bg-gray-200 mr-5">
+                <svg
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-6gg3zs"
+                  focusable="false"
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  data-testid="PersonIcon"
+                >
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z">
+                  </path>
+                </svg>
+              </div>
+              <div class="MuiBox-root css-0">
+                <p class="MuiTypography-root MuiTypography-body2 css-1e1bhhm m-0 text-lg font-[Barlow,sans-serif] font-bold leading-normal text-blue-900">
+                  <%= person_dept["name"] %>
+                </p>
+                <p class="MuiTypography-root MuiTypography-body2 css-18n1x01 m-0 text-lg font-[Barlow,sans-serif] font-medium leading-normal text-blue-400 whitespace-nowrap">
+                  <%= person_dept["job"] %>
+                </p>
+              </div>
             </div>
-            <div class="MuiBox-root css-0">
-              <p class="MuiTypography-root MuiTypography-body2 css-1e1bhhm m-0 text-lg font-[Barlow,sans-serif] font-bold leading-normal text-blue-900">
-                <%= person_dept["name"] %>
-              </p>
-              <p class="MuiTypography-root MuiTypography-body2 css-18n1x01 m-0 text-lg font-[Barlow,sans-serif] font-medium leading-normal text-blue-400 whitespace-nowrap">
-                <%= person_dept["job"] %>
-              </p>
-            </div>
-          </div>
-        </button>
-      <% end %>
+          </button>
+        <% end %>
       </div>
     </div>
   </div>
   <div class="flex flex-col gap-y-3 w-2/3">
-    <div
-      class="MuiBox-root relative flex flex-row bg-white bg-opacity-90 p-6 rounded-t-4xl -m-t-16 mx-8"
-    >
-      <span
-        class="MuiBadge-root relative flex flex-row items-center flex-shrink-0"
-      >
-        <div
-          class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault relative flex items-center justify-center flex-shrink-0 font-barlow text-[1.42857rem] leading-none rounded-full overflow-hidden select-none text-white bg-gray-400 w-20 h-20"
-        >
+    <div class="MuiBox-root relative flex flex-row bg-white bg-opacity-90 p-6 rounded-t-4xl -m-t-16 mx-8">
+      <span class="MuiBadge-root relative flex flex-row items-center flex-shrink-0">
+        <div class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault relative flex items-center justify-center flex-shrink-0 font-barlow text-[1.42857rem] leading-none rounded-full overflow-hidden select-none text-white bg-gray-400 w-20 h-20">
           <svg
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback select-none inline-block flex-shrink-0 transition-fill text-[1.71429rem] w-3/4 h-3/4"
             focusable="false"
@@ -52,14 +50,11 @@
             viewBox="0 0 24 24"
             data-testid="PersonIcon"
           >
-            <path
-              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-            ></path>
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z">
+            </path>
           </svg>
         </div>
-        <span
-          class="MuiBadge-badge MuiBadge-standard MuiBadge-anchorOriginBottomRight MuiBadge-anchorOriginBottomRightCircular MuiBadge-overlapCircular bg-white w-6 h-6 shadow-sm flex flex-wrap place-content-center items-center absolute box-border font-barlow font-semibold text-xs min-w-5 leading-none px-1.5 rounded-md z-10 transition-transform duration-225 ease-in-out bottom-2 right-2 transform scale-100 translate-x-1/2 translate-y-1/2 origin-bottom-right"
-        >
+        <span class="MuiBadge-badge MuiBadge-standard MuiBadge-anchorOriginBottomRight MuiBadge-anchorOriginBottomRightCircular MuiBadge-overlapCircular bg-white w-6 h-6 shadow-sm flex flex-wrap place-content-center items-center absolute box-border font-barlow font-semibold text-xs min-w-5 leading-none px-1.5 rounded-md z-10 transition-transform duration-225 ease-in-out bottom-2 right-2 transform scale-100 translate-x-1/2 translate-y-1/2 origin-bottom-right">
           <button
             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium inline-flex items-center justify-center relative box-border bg-transparent outline-none border-0 m-0 cursor-pointer select-none align-middle appearance-none no-underline text-center flex-none text-[1.71429rem] p-2 rounded-full overflow-visible transition-colors duration-150 text-[#4fd1c5]"
             tabindex="0"
@@ -73,22 +68,17 @@
               data-testid="EditIcon"
               style="width: 20px; height: 20px"
             >
-              <path
-                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-              ></path>
+              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z">
+              </path>
             </svg>
           </button>
         </span>
       </span>
       <div class="MuiBox-root w-full flex flex-col justify-content ml-6">
-        <h5
-          class="MuiTypography-root MuiTypography-h5 m-0 font-barlow text-xl leading-snug text-[#2d3748] font-semibold"
-        >
+        <h5 class="MuiTypography-root MuiTypography-h5 m-0 font-barlow text-xl leading-snug text-[#2d3748] font-semibold">
           <%= @users["name"] %>
         </h5>
-        <p
-          class="MuiTypography-root MuiTypography-body1 text-lg font-[Barlow,sans-serif] font-medium leading-normal text-gray-600"
-        >
+        <p class="MuiTypography-root MuiTypography-body1 text-lg font-[Barlow,sans-serif] font-medium leading-normal text-gray-600">
           <%= @users["job"] %>
         </p>
       </div>
@@ -99,20 +89,89 @@
         style="justify-content: center"
       >
         <%= for skill <- @users["skills"] do %>
-        <div
-          class="MuiBox-root bg-white w-[160px] h-[140px] rounded-md p-0 px-2 py-3 flex flex-col justify-center items-center transition-shadow duration-200 ease-in"
-        >
-          <h4
-            class="MuiTypography-root MuiTypography-h4 font-[Barlow,sans-serif] leading-tight font-semibold m-auto text-6xl"
-            score="12"
-          >
-            <%= skill["score"] %>
-          </h4>
-          <span
-            class="MuiTypography-root MuiTypography-caption my-0 mx-0 mb-2 font-[Barlow,sans-serif] leading-relaxed text-gray-500 font-bold text-base text-center h-12"
-            ><%= skill["name"] %></span>
-        </div>
+          <div class="MuiBox-root bg-white w-[160px] h-[140px] rounded-md p-0 px-2 py-3 flex flex-col justify-center items-center transition-shadow duration-200 ease-in">
+            <h4
+              class="MuiTypography-root MuiTypography-h4 font-[Barlow,sans-serif] leading-tight font-semibold m-auto text-6xl"
+              score="12"
+            >
+              <%= skill["score"] %>
+            </h4>
+            <span class="MuiTypography-root MuiTypography-caption my-0 mx-0 mb-2 font-[Barlow,sans-serif] leading-relaxed text-gray-500 font-bold text-base text-center h-12">
+              <%= skill["name"] %>
+            </span>
+          </div>
         <% end %>
+      </div>
+      <% unique_domains =
+        @users["skills"]
+        # Extract the domain values
+        |> Enum.map(& &1["domain"])
+        # Remove duplicates to ensure uniqueness
+        |> Enum.uniq_by(& &1) %>
+      <% overall_scores =
+        # Group skills by domain
+        @users["skills"]
+        |> Enum.group_by(& &1["domain"])
+        # Map to domain and average score
+        |> Enum.map(fn {domain, skills} ->
+          # Calculate average score for the domain
+          average_score =
+            skills
+            |> Enum.map(& &1["score"])
+            |> Enum.reduce(0, &+/2)
+            |> (fn total -> Float.round(total / Enum.count(skills), 2) end).()
+
+          {domain, average_score}
+        end) %>
+      <!-- Chart container class styled with CSS -->
+      <div class="charts-container">
+        <!-- Create separate radar charts for each unique domain-->
+        <%= for domain <- unique_domains do %>
+          <div class="Muibox-root css-ns91za">
+            <h5 style="text-align: center"><%= String.capitalize(domain) <> " Experience" %></h5>
+            <!-- Style each chart and pass in data from user skill list.
+            data-user-name, data-labels and data-scores
+            are the arguments that are passed to the chart. -->
+            <canvas
+              role="img"
+              height="880"
+              width="880"
+              style="display: block; box-sizing: border-box; height: 440px; width: 440px;"
+              id={"radar-chart-" <> domain}
+              phx-hook="ChartJS"
+              data-user-name={@users["name"] |> Jason.encode!()}
+              data-labels={
+                @users["skills"]
+                |> Enum.filter(&(&1["domain"] == domain))
+                |> Enum.map(& &1["name"])
+                |> Jason.encode!()
+              }
+              data-scores={
+                @users["skills"]
+                |> Enum.filter(&(&1["domain"] == domain))
+                |> Enum.map(& &1["score"])
+                |> Jason.encode!()
+              }
+            >
+            </canvas>
+          </div>
+        <% end %>
+        <div class="Muibox-root css-ns91za">
+          <!-- Create separate radar chart for overall skill competencies -->
+          <h5 style="text-align: center">Overall</h5>
+          <canvas
+            role="img"
+            height="880"
+            width="880"
+            style="display: block; box-sizing: border-box; height: 440px; width: 440px;"
+            id="radar-chart-overall"
+            phx-hook="ChartJS"
+            data-user-name={@users["name"] |> Jason.encode!()}
+            data-labels={overall_scores |> Enum.map(&elem(&1, 0)) |> Jason.encode!()}
+            data-scores={overall_scores |> Enum.map(&elem(&1, 1)) |> Jason.encode!()}
+          >
+          </canvas>
+        </div>
       </div>
     </div>
   </div>
