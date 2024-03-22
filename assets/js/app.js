@@ -46,7 +46,7 @@ hooks.ChartJS = {
       },
       // Set options for chart
       options: {
-        responsive: true,
+        responsive: false,
         maintainAspectRatio: true,
         pointRadius: 0,
         borderWidth: 0,
@@ -54,7 +54,23 @@ hooks.ChartJS = {
         scales: {
           r: {
             ticks: {
-              display: false
+              display: true,
+            },
+            // Set skill label size
+            pointLabels: {
+              font: {
+                size: 18
+              }
+            },
+          },
+        },
+        plugins: {
+          // Set employee font size
+          legend: {
+            labels: {
+              font: {
+                size: 25
+              }
             }
           }
         }
@@ -100,4 +116,3 @@ liveSocket.connect()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
-
