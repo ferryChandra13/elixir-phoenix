@@ -8,12 +8,12 @@ defmodule ForumWeb.Live.PageLive do
   # For radar chart, https://medium.com/@lionel.aimerie/integrating-chart-js-into-elixir-phoenix-for-visual-impact-9a3991f0690f
   # https://hexdocs.pm/phoenix_live_view/js-interop.html#client-hooks-via-phx-hook
   # and GPT tq.
-
-
   # mount is the first function to be called (with the default value)
   def mount(_params, _session, socket) do
+    talent_forge_user = System.get_env("TALENT_FORGE_USERNAME")
+    talent_forge_pass = System.get_env("TALENT_FORGE_PASSWORD")
     HTTPoison.start()
-    token = get_token("john.ang", "30971f7a1d2058cebe65e9eb5f50c967bf8fc526a5de9cb8dd42d3ebeec3a938")
+    token = get_token(talent_forge_user, talent_forge_pass)
     headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json"]
     user_data = get_user_data( 1, headers)
     dept_data = get_department_data( 1, headers)
