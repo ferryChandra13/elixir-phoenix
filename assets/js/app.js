@@ -54,7 +54,7 @@ hooks.ChartJS = {
         scales: {
           r: {
             ticks: {
-              display: true,
+              display: false,
             },
             // Set skill label size
             pointLabels: {
