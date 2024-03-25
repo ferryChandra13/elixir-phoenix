@@ -36,6 +36,7 @@ defmodule ForumWeb.Live.PageLive do
     {:noreply, assign(socket, users: user_data, dept: dept_data)}
   end
 
+  #TODO: add validation to form
   def handle_event("validate", %{"user" => params}, socket) do
     form =
       %User{}
@@ -46,14 +47,21 @@ defmodule ForumWeb.Live.PageLive do
     {:noreply, assign(socket, form: form)}
   end
 
+  # Create event handler to handle form submission
   def handle_event("save", params, socket) do
+    # Inspect user-provided params
     IO.inspect(params, label: "save event params")
     HTTPoison.start()
+
+    # Retrieve salt from existing endpoint and hash password
     salt=get_salt()
     password_hash = hash_password(params["hash_password"], salt)
     updated_params = Map.put(params, "hash_password", password_hash)
-    IO.puts(password_hash)
+
+    # Inspect updated params
     IO.inspect(updated_params, label: "updated_params")
+
+    #  Send form data to create_user function
     case Accounts.create_user(updated_params) do
       {:ok, _user} ->
         {:noreply,

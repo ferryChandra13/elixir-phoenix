@@ -94,7 +94,7 @@ hooks.ChartJS = {
     }
   }
 }
-
+// Define ShowPopup hook for displaying popup upon successful user registration
 hooks.ShowPopup = {
   mounted() {
     this.handleEvent("show-popup", () => {
