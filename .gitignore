@@ -35,3 +35,5 @@ forum-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# ignore local .env file
+.env

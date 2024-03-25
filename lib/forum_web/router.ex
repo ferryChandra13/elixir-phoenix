@@ -1,6 +1,8 @@
 defmodule ForumWeb.Router do
   use ForumWeb, :router
 
+  import ForumWeb.UserAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,6 +10,8 @@ defmodule ForumWeb.Router do
     plug :put_root_layout, html: {ForumWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
+    plug ForumWeb.Plugs.HandleSessionExpiry
   end
 
   pipeline :api do
@@ -15,12 +19,12 @@ defmodule ForumWeb.Router do
   end
 
   scope "/", ForumWeb do
-    pipe_through :browser
+    pipe_through [:browser, :require_authenticated_user]
 
-    get "/", PageController, :home
+    live "/", Live.PageLive
+    get "/posts", PageController, :home
     get "/get_skills/:user_id", PageController, :get_skills
     # get "/department_member/:user_id", SkillController, :department_member
-    live "/posts", Live.PageLive
   end
 
   # Other scopes may use custom stacks.
@@ -44,6 +48,44 @@ defmodule ForumWeb.Router do
 
       live_dashboard "/dashboard", metrics: ForumWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
+    end
+  end
+
+  ## Authentication routes
+
+  scope "/", ForumWeb do
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
+    live_session :redirect_if_user_is_authenticated,
+      on_mount: [{ForumWeb.UserAuth, :redirect_if_user_is_authenticated}] do
+      live "/users/register", UserRegistrationLive, :new
+      live "/users/log_in", UserLoginLive, :new
+      live "/users/reset_password", UserForgotPasswordLive, :new
+      live "/users/reset_password/:token", UserResetPasswordLive, :edit
+    end
+
+    post "/users/log_in", UserSessionController, :create
+  end
+
+  scope "/", ForumWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :require_authenticated_user,
+      on_mount: [{ForumWeb.UserAuth, :ensure_authenticated}] do
+      live "/users/settings", UserSettingsLive, :edit
+      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+    end
+  end
+
+  scope "/", ForumWeb do
+    pipe_through [:browser]
+
+    delete "/users/log_out", UserSessionController, :delete
+
+    live_session :current_user,
+      on_mount: [{ForumWeb.UserAuth, :mount_current_user}] do
+      live "/users/confirm/:token", UserConfirmationLive, :edit
+      live "/users/confirm", UserConfirmationInstructionsLive, :new
     end
   end
 end
