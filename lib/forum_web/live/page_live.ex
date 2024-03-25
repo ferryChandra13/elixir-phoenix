@@ -2,6 +2,9 @@
 defmodule ForumWeb.Live.PageLive do
   use ForumWeb, :live_view
 
+  alias Forum.Accounts.User
+  alias Forum.Accounts
+
   # Documentation sources
   # https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.Router.html#functions
   # https://www.youtube.com/watch?v=hrpulBR5PFg&t=492s
@@ -17,18 +20,55 @@ defmodule ForumWeb.Live.PageLive do
     headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json"]
     user_data = get_user_data( 1, headers)
     dept_data = get_department_data( 1, headers)
-    {:ok, assign(socket, users: user_data, dept: dept_data), layout: false}
+    {:ok, assign(socket, users: user_data, dept: dept_data, form: to_form(%{})), layout: false}
   end
 
   # When a button with phx-hook="refresh_data" is clicked, handle_event triggered.
   def handle_event("refresh_data", %{"user_id" => user_id, "dept_id" => dept_id}, socket) do
     # can use req library
+    talent_forge_user = System.get_env("TALENT_FORGE_USERNAME")
+    talent_forge_pass = System.get_env("TALENT_FORGE_PASSWORD")
     HTTPoison.start()
-    token = get_token("john.ang", "30971f7a1d2058cebe65e9eb5f50c967bf8fc526a5de9cb8dd42d3ebeec3a938")
+    token = get_token(talent_forge_user, talent_forge_pass)
     headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json"]
     user_data = get_user_data( user_id, headers)
     dept_data = get_department_data( dept_id, headers)
     {:noreply, assign(socket, users: user_data, dept: dept_data)}
+  end
+
+  def handle_event("validate", %{"user" => params}, socket) do
+    form =
+      %User{}
+      |> Accounts.update_user(params)
+      |> Map.put(:action, :insert)
+      |> to_form()
+
+    {:noreply, assign(socket, form: form)}
+  end
+
+  def handle_event("save", params, socket) do
+    IO.inspect(params, label: "save event params")
+    HTTPoison.start()
+    salt=get_salt()
+    password_hash = hash_password(params["hash_password"], salt)
+    updated_params = Map.put(params, "hash_password", password_hash)
+    IO.puts(password_hash)
+    IO.inspect(updated_params, label: "updated_params")
+    case Accounts.create_user(updated_params) do
+      {:ok, _user} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "user created")
+         |> push_event("show-popup", %{})
+        }
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, form: to_form(changeset))}
+    end
+  end
+
+  def handle_event("close-popup", _params, socket) do
+    {:noreply, push_patch(socket, to: Routes.live_path(socket, __MODULE__))}
   end
 
   defp get_user_data(user_id, headers) do
@@ -57,5 +97,16 @@ defmodule ForumWeb.Live.PageLive do
       {:ok, data} -> data["accessToken"]
       {:error, _} -> {:error, "Failed to get token"}
     end
+  end
+
+  defp get_salt() do
+    url="http://127.0.0.1:8001/salt"
+    {:ok, response} = HTTPoison.get(url)
+    salt = Jason.decode!(response.body)["salt"]
+  end
+
+  defp hash_password(password, salt) do
+    :crypto.hash(:sha256, password <> salt)
+    |> Base.encode16(case: :lower)
   end
 end
