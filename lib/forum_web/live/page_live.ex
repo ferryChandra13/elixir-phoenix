@@ -25,6 +25,8 @@ defmodule ForumWeb.Live.PageLive do
 
   # When a button with phx-hook="refresh_data" is clicked, handle_event triggered.
   def handle_event("refresh_data", %{"user_id" => user_id, "dept_id" => dept_id}, socket) do
+    talent_forge_user = System.get_env("TALENT_FORGE_USERNAME")
+    talent_forge_pass = System.get_env("TALENT_FORGE_PASSWORD")
     # can use req library
     talent_forge_user = System.get_env("TALENT_FORGE_USERNAME")
     talent_forge_pass = System.get_env("TALENT_FORGE_PASSWORD")

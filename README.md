@@ -1,5 +1,10 @@
 # Forum
 
+Start PostgreSQL server,
+
+- Run `docker pull postgres` to pull the latest image
+- Run `docker run --name postgres-elixir -e POSTGRES_PASSWORD=postgres -d -p 5433:5432 postgres:latest` to start the server
+
 To start your Phoenix server:
 
 - Run `mix setup` to install and setup dependencies
