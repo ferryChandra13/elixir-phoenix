@@ -17,7 +17,8 @@ defmodule Forum.Application do
       # Start a worker by calling: Forum.Worker.start_link(arg)
       # {Forum.Worker, arg},
       # Start to serve requests, typically the last entry
-      ForumWeb.Endpoint
+      ForumWeb.Endpoint,
+      Auth.AutoLogoutServer
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

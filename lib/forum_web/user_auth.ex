@@ -76,12 +76,12 @@ defmodule ForumWeb.UserAuth do
 
     if live_socket_id = get_session(conn, :live_socket_id) do
       ForumWeb.Endpoint.broadcast(live_socket_id, "disconnect", %{})
+      conn
+      |> renew_session()
+      |> delete_resp_cookie(@remember_me_cookie)
+      |> redirect(to: ~p"/users/log_in")
     end
 
-    conn
-    |> renew_session()
-    |> delete_resp_cookie(@remember_me_cookie)
-    |> redirect(to: ~p"/")
   end
 
   @doc """

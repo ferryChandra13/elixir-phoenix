@@ -11,7 +11,10 @@ defmodule ForumWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
-    plug ForumWeb.Plugs.HandleSessionExpiry
+  end
+
+  pipeline :authorized_route do
+    plug Auth.AutoLogout
   end
 
   pipeline :api do
@@ -19,11 +22,17 @@ defmodule ForumWeb.Router do
   end
 
   scope "/", ForumWeb do
-    pipe_through [:browser, :require_authenticated_user]
+    pipe_through [:browser, :require_authenticated_user, :authorized_route]
 
-    live "/", Live.PageLive
     get "/posts", PageController, :home
     get "/get_skills/:user_id", PageController, :get_skills
+
+    live_session :require_authenticated_user,
+    on_mount: [{ForumWeb.UserAuth, :ensure_authenticated, }] do
+      live "/", Live.PageLive
+      live "/users/settings", UserSettingsLive, :edit
+      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+    end
     # get "/department_member/:user_id", SkillController, :department_member
   end
 
@@ -67,15 +76,11 @@ defmodule ForumWeb.Router do
     post "/users/log_in", UserSessionController, :create
   end
 
-  scope "/", ForumWeb do
-    pipe_through [:browser, :require_authenticated_user]
+  # scope "/", ForumWeb do
+  #   pipe_through [:browser, :require_authenticated_user]
 
-    live_session :require_authenticated_user,
-      on_mount: [{ForumWeb.UserAuth, :ensure_authenticated}] do
-      live "/users/settings", UserSettingsLive, :edit
-      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
-    end
-  end
+
+  # end
 
   scope "/", ForumWeb do
     pipe_through [:browser]

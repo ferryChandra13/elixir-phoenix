@@ -8,8 +8,7 @@ defmodule ForumWeb.Endpoint do
     store: :cookie,
     key: "_forum_key",
     signing_salt: "dzy32RBH",
-    same_site: "Lax",
-    max_age: 10
+    same_site: "Lax"
   ]
 
   socket "/live", Phoenix.LiveView.Socket,
