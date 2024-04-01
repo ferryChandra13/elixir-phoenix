@@ -19,7 +19,6 @@ defmodule ForumWeb.UserJSON do
   defp data(%User{} = user) do
     %{
       id: user.id,
-      name: user.name,
       email: user.email,
     }
   end

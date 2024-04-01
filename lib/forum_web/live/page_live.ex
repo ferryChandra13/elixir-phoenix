@@ -22,9 +22,11 @@ defmodule ForumWeb.Live.PageLive do
 
   # When a button with phx-hook="refresh_data" is clicked, handle_event triggered.
   def handle_event("refresh_data", %{"user_id" => user_id, "dept_id" => dept_id}, socket) do
+    talent_forge_user = System.get_env("TALENT_FORGE_USERNAME")
+    talent_forge_pass = System.get_env("TALENT_FORGE_PASSWORD")
     # can use req library
     HTTPoison.start()
-    token = get_token("john.ang", "30971f7a1d2058cebe65e9eb5f50c967bf8fc526a5de9cb8dd42d3ebeec3a938")
+    token = get_token(talent_forge_user, talent_forge_pass)
     headers = ["Authorization": "Bearer #{token}", "Accept": "Application/json"]
     user_data = get_user_data( user_id, headers)
     dept_data = get_department_data( dept_id, headers)
