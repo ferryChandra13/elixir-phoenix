@@ -2,6 +2,11 @@ defmodule Auth.AutoLogoutServer do
   use GenServer
   import Phoenix.Controller
 
+  @moduledoc """
+  This module handles auto logout.
+  This module contains GenServer functions that start a timer whenever a new route is requested. The timer will trigger user logout function if no activity is detected (no movement to the new router). This can be modified in @inactivity_timeout constant. However, there is still a problem of the timer not being reset when handle_event is triggered.
+  """
+
   @inactivity_timeout :timer.seconds(15) # 15 seconds
 
   def start_link(_opts) do
