@@ -2,7 +2,14 @@ defmodule Forum.Repo.Migrations.CreateUsersAuthTables do
   use Ecto.Migration
 
   def change do
+    alter table(:posts) do
+      delete :user_id
+      add :user_id, references(:users, on_delete: :nothing)
+    end
+
     execute "CREATE EXTENSION IF NOT EXISTS citext", ""
+
+    delete(table(:users))  # This line will delete the existing users table in the previous migration
 
     create table(:users) do
       add :email, :citext, null: false
