@@ -12,3 +12,46 @@
     align-items: flex-start;
     gap: 20px;
 }
+
+.css-1kkjeqz .MuiToggleButtonGroup-grouped:not(:last-of-type) {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.css-tl6h3a.Mui-selected, .css-tl6h3a.Mui-selected:hover {
+    color: white;
+    background-color: rgb(143, 152, 200);
+}
+
+.css-tl6h3a.MuiToggleButtonGroup-grouped {
+    border-radius: 8px !important;
+    border: 1px solid transparent !important;
+}
+
+.css-tl6h3a {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    outline: 0px;
+    margin: 0px;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    appearance: none;
+    text-decoration: none;
+    font-family: Barlow, sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.75;
+    border-radius: 4px;
+    padding: 11px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    text-transform: capitalize;
+    background-color: rgb(244, 247, 254);
+    color: rgb(174, 174, 178);
+}

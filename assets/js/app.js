@@ -94,7 +94,14 @@ hooks.ChartJS = {
     }
   }
 }
-
+// Define ShowPopup hook for displaying popup upon successful user registration
+hooks.ShowPopup = {
+  mounted() {
+    this.handleEvent("show-popup", () => {
+      document.getElementById("success-popup").style.display = "block";
+    });
+  }
+};
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
