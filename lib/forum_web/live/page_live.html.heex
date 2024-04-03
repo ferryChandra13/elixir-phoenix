@@ -177,25 +177,13 @@
         <div class="col-md-6 col-sm-6">
           <div class="row">
             <div class="col-md-6 col-sm-6">
-              <h1>Test Registration Form</h1>
+              <h1>Create a post</h1>
             </div>
           </div>
           <!-- Create demo form using Phoenix.HTML.Form -->
           <.form for={@form} phx-submit="save">
-            <.input label="Full Name" type="text" field={@form[:name]} />
-            <.input label="Email" type="email" field={@form[:email]} />
-            <.input label="Password" type="password" field={@form[:hash_password]} />
-            <.input label="Phone Number" type="number" inputmode="numeric" pattern="[0-9]*" field={@form[:number]} />
-            <label for="skill-list">Choose a skill:</label>
-            <input list="skill-list" id="skills" name="skills" />
-
-            <datalist id="skill-list">
-              <option value="React"></option>
-              <option value="Python"></option>
-              <option value="Machine Learning"></option>
-              <option value="Phoenix"></option>
-              <option value="Elixir"></option>
-            </datalist>
+            <.input label="Title" type="text" field={@form[:title]} />
+            <.input label="Content" type="text" field={@form[:body]} />
             
             <button
               class="MuiButtonBase-root MuiToggleButton-root Mui-selected MuiToggleButton-sizeMedium MuiToggleButton-standard MuiToggleButtonGroup-grouped MuiToggleButtonGroup-groupedHorizontal css-tl6h3a"
@@ -207,7 +195,7 @@
           <!-- Demo popup to appear only upon successful saving to DB -->
           <!-- See app.js for the hook definition -->
         <div id="success-popup" class="popup" style="display: none;" phx-hook="ShowPopup">
-          <p>User created successfully!</p>
+          <p>Post created successfully!</p>
           <button phx-click="close-popup">Close</button>
         </div>
         </div>

@@ -4,6 +4,7 @@ defmodule ForumWeb.Live.PageLive do
 
   alias Forum.Accounts.User
   alias Forum.Accounts
+  alias Forum.Posts
 
   # Documentation sources
   # https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.Router.html#functions
@@ -52,23 +53,14 @@ defmodule ForumWeb.Live.PageLive do
   # Create event handler to handle form submission
   def handle_event("save", params, socket) do
     # Inspect user-provided params
-    IO.inspect(params, label: "save event params")
-    HTTPoison.start()
+    IO.inspect(params, label: "form params")
 
-    # Retrieve salt from existing endpoint and hash password
-    salt=get_salt()
-    password_hash = hash_password(params["hash_password"], salt)
-    updated_params = Map.put(params, "hash_password", password_hash)
-
-    # Inspect updated params
-    IO.inspect(updated_params, label: "updated_params")
-
-    #  Send form data to create_user function
-    case Accounts.create_user(updated_params) do
-      {:ok, _user} ->
+    case Posts.create_post(params) do
+      {:ok, _post} ->
+        IO.inspect(params, label: "post creation successful")
         {:noreply,
          socket
-         |> put_flash(:info, "user created")
+         |> put_flash(:info, "post created")
          |> push_event("show-popup", %{})
         }
 
@@ -107,16 +99,5 @@ defmodule ForumWeb.Live.PageLive do
       {:ok, data} -> data["accessToken"]
       {:error, _} -> {:error, "Failed to get token"}
     end
-  end
-
-  defp get_salt() do
-    url="http://127.0.0.1:8001/salt"
-    {:ok, response} = HTTPoison.get(url)
-    salt = Jason.decode!(response.body)["salt"]
-  end
-
-  defp hash_password(password, salt) do
-    :crypto.hash(:sha256, password <> salt)
-    |> Base.encode16(case: :lower)
   end
 end
